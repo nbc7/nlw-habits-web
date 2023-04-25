@@ -1,6 +1,7 @@
-import { Plus, X } from 'phosphor-react';
+import { Plus, X, CaretDown } from 'phosphor-react';
 import * as Dialog from '@radix-ui/react-dialog';
-import { useEffect } from 'react';
+import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
+import { useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 
 import logoImage from '../assets/logo.svg';
@@ -29,21 +30,50 @@ export function Header() {
   }
 
   function Logout() {
+    const triggerRef = useRef<HTMLButtonElement>(null);
+    const [triggerWidth, setTriggerWidth] = useState<number | null>(null);
+
+    const DropDownMenuItemStyle =
+      'px-6 py-4 font-semibold rounded-lg text-center hover:border-violet-500 hover:bg-violet-500 hover:cursor-pointer transition-colors transition-[focus] focus:outline-none focus:ring-2 focus:ring-inset focus:ring-violet-600';
+
+    useEffect(() => {
+      if (triggerRef.current) setTriggerWidth(triggerRef.current.offsetWidth);
+    }, [triggerRef]);
+
     return (
-      <button
-        onClick={signOut}
-        className="border border-violet-500 font-semibold rounded-lg px-6 py-2 flex items-center gap-3 hover:border-violet-300 transition-colors focus:outline-none focus:ring-2 focus:ring-violet-600 focus:ring-offset-2 focus:ring-offset-background"
-      >
-        <img
-          src={user?.avatarUrl}
-          alt={`${user?.name.split(' ')[0].substring(0, 12)} profile picture`}
-          width={36}
-          height={36}
-          referrerPolicy="no-referrer"
-          className="rounded-full"
-        />
-        {user?.name.split(' ')[0].substring(0, 12)} (Logout)
-      </button>
+      <DropdownMenu.Root>
+        <DropdownMenu.Trigger
+          ref={triggerRef}
+          className="border border-violet-500 font-semibold rounded-lg px-6 py-2 flex items-center gap-3 hover:border-violet-300 transition-colors focus:outline-none focus:ring-2 focus:ring-violet-600 focus:ring-offset-2 focus:ring-offset-background"
+        >
+          <CaretDown size={20} className="text-violet-500" />
+          {user?.name.split(' ')[0].substring(0, 12)}
+          <img
+            src={user?.avatarUrl}
+            alt={`${user?.name.split(' ')[0].substring(0, 12)} profile picture`}
+            width={36}
+            height={36}
+            referrerPolicy="no-referrer"
+            className="rounded-full"
+          />
+        </DropdownMenu.Trigger>
+
+        <DropdownMenu.Portal>
+          {triggerWidth && (
+            <DropdownMenu.Content className="bg-background border border-violet-500 rounded-lg" style={{ width: triggerWidth }}>
+              <DropdownMenu.Item className={DropDownMenuItemStyle}>Profile</DropdownMenu.Item>
+
+              <DropdownMenu.Item className={DropDownMenuItemStyle}>Settings</DropdownMenu.Item>
+
+              <DropdownMenu.Item className={DropDownMenuItemStyle} onClick={signOut}>
+                Logout
+              </DropdownMenu.Item>
+
+              <DropdownMenu.Arrow height={8} width={16} className="fill-violet-500" />
+            </DropdownMenu.Content>
+          )}
+        </DropdownMenu.Portal>
+      </DropdownMenu.Root>
     );
   }
 
