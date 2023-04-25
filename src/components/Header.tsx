@@ -2,6 +2,7 @@ import { Plus, X, CaretDown } from 'phosphor-react';
 import * as Dialog from '@radix-ui/react-dialog';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 
 import logoImage from '../assets/logo.svg';
@@ -61,13 +62,19 @@ export function Header() {
         <DropdownMenu.Portal>
           {triggerWidth && (
             <DropdownMenu.Content className="bg-background border border-violet-500 rounded-lg" style={{ width: triggerWidth }}>
-              <DropdownMenu.Item className={DropDownMenuItemStyle}>Profile</DropdownMenu.Item>
+              <Link to="/profile">
+                <DropdownMenu.Item className={DropDownMenuItemStyle}>Profile</DropdownMenu.Item>
+              </Link>
 
-              <DropdownMenu.Item className={DropDownMenuItemStyle}>Settings</DropdownMenu.Item>
+              <Link to="/settings">
+                <DropdownMenu.Item className={DropDownMenuItemStyle}>Settings</DropdownMenu.Item>
+              </Link>
 
-              <DropdownMenu.Item className={DropDownMenuItemStyle} onClick={signOut}>
-                Logout
-              </DropdownMenu.Item>
+              <Link to="/">
+                <DropdownMenu.Item className={DropDownMenuItemStyle} onClick={signOut}>
+                  Logout
+                </DropdownMenu.Item>
+              </Link>
 
               <DropdownMenu.Arrow height={8} width={16} className="fill-violet-500" />
             </DropdownMenu.Content>
@@ -83,7 +90,9 @@ export function Header() {
 
   return (
     <div className="w-full max-w-3xl mx-auto flex items-center justify-between">
-      <img src={logoImage} alt="Habits" />
+      <Link to="/">
+        <img src={logoImage} alt="Habits" />
+      </Link>
 
       <div className="flex gap-3">
         <Dialog.Root>
