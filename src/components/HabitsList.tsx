@@ -3,6 +3,7 @@ import dayjs from 'dayjs';
 import { Check } from 'phosphor-react';
 import { useEffect, useState } from 'react';
 import { api } from '../lib/axios';
+import { useAuth } from '../hooks/useAuth';
 
 interface HabitsListProps {
   date: Date;
@@ -20,14 +21,21 @@ interface HabitsInfo {
 
 export function HabitsList({ date, onCompletedChanged }: HabitsListProps) {
   const [habitsInfo, setHabitsInfo] = useState<HabitsInfo>();
+  const { user } = useAuth();
 
   useEffect(() => {
     api
-      .get('/day', {
-        params: {
-          date: date.toISOString(),
+      .post(
+        '/day',
+        {
+          userEmail: user?.email,
         },
-      })
+        {
+          params: {
+            date: date.toISOString(),
+          },
+        }
+      )
       .then((response) => {
         setHabitsInfo(response.data);
       });

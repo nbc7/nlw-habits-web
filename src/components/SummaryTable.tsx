@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { generateDatesFromYearBeginning } from '../utils/generate-dates-from-year-beginning';
 import { HabitDay } from './HabitDay';
 import dayjs from 'dayjs';
+import { useAuth } from '../hooks/useAuth';
 
 const weekDays = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
 
@@ -20,12 +21,15 @@ type Summary = {
 
 export function SummaryTable() {
   const [summary, setSummary] = useState<Summary>([]);
+  const { user } = useAuth();
 
   useEffect(() => {
-    api.get('summary').then((response) => {
-      setSummary(response.data);
-    });
-  }, []);
+    if (user) {
+      api.post('summary', { userEmail: user.email }).then((response) => {
+        setSummary(response.data);
+      });
+    }
+  }, [user]);
 
   return (
     <div className="w-full flex">
