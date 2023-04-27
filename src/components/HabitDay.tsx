@@ -4,7 +4,8 @@ import clsx from 'clsx';
 import { ProgressBar } from './ProgressBar';
 import dayjs from 'dayjs';
 import { HabitsList } from './HabitsList';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useAuth } from '../hooks/useAuth';
 
 interface HabitDayProps {
   date: Date;
@@ -14,6 +15,7 @@ interface HabitDayProps {
 
 export function HabitDay({ defaultCompleted = 0, amount = 0, date }: HabitDayProps) {
   const [completed, setCompleted] = useState(defaultCompleted);
+  const { isUserLoading } = useAuth();
 
   const completedPercentage = amount > 0 ? Math.round((completed / amount) * 100) : 0;
 
@@ -24,11 +26,16 @@ export function HabitDay({ defaultCompleted = 0, amount = 0, date }: HabitDayPro
     setCompleted(completed);
   }
 
+  useEffect(() => {
+    handleCompletedChanged(defaultCompleted);
+  }, [defaultCompleted]);
+
   return (
     <Popover.Root>
       <Popover.Trigger
+        disabled={isUserLoading}
         className={clsx(
-          'w-10 h-10 border-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-violet-600 focus:ring-offset-2 focus:ring-offset-background',
+          'w-10 h-10 border-2 rounded-lg transition-colors disabled:opacity-40 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-violet-600 focus:ring-offset-2 focus:ring-offset-background',
           {
             'bg-zinc-900 border-zinc-800': completedPercentage == 0,
             'bg-violet-900 border-violet-700': completedPercentage > 0 && completedPercentage < 20,
