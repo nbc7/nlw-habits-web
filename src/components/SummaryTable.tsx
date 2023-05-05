@@ -1,9 +1,10 @@
+import { useContext, useEffect, useState } from 'react';
 import { api } from '../lib/axios';
-import { useEffect, useState } from 'react';
+import dayjs from 'dayjs';
+
 import { generateDatesFromYearBeginning } from '../utils/generate-dates-from-year-beginning';
 import { HabitDay } from './HabitDay';
-import dayjs from 'dayjs';
-import { useAuth } from '../hooks/useAuth';
+import { ProfileContext } from '../contexts/ProfileContext';
 
 const weekDays = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
 
@@ -21,15 +22,13 @@ type Summary = {
 
 export function SummaryTable() {
   const [summary, setSummary] = useState<Summary>([]);
-  const { user } = useAuth();
+  const user = useContext(ProfileContext);
 
   useEffect(() => {
-    if (user) {
-      api.post('summary', { userEmail: user.email }).then((response) => {
-        setSummary(response.data);
-      });
-    }
-  }, [user]);
+    api.post('summary', { userEmail: user.email }).then((response) => {
+      setSummary(response.data);
+    });
+  }, []);
 
   return (
     <div className="w-full flex">

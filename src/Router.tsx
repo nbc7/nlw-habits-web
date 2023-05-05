@@ -20,15 +20,15 @@ export function Router() {
     <Routes>
       <Route path="*" element={<Error404 />} />
       <Route path="/" element={<Home />} />
+      <Route path="/:username" element={<Profile />} />
       <Route
-        path="/profile"
+        path="/settings"
         element={
           <RequireAuth>
-            <Profile />
+            <App />
           </RequireAuth>
         }
       />
-      <Route path="/settings" element={<App />} />
     </Routes>
   );
 }

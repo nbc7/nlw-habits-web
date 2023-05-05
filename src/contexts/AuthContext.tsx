@@ -3,7 +3,7 @@ import Cookies from 'universal-cookie';
 
 import { api } from '../lib/axios';
 
-interface UserProps {
+export interface UserProps {
   name: string;
   email: string;
   avatarUrl: string;

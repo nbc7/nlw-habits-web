@@ -62,7 +62,7 @@ export function Header() {
         <DropdownMenu.Portal>
           {triggerWidth && (
             <DropdownMenu.Content className="bg-background border border-violet-500 rounded-lg" style={{ width: triggerWidth }}>
-              <Link to="/profile">
+              <Link to={`/${encodeURI(user!.email.split('@')[0])}`}>
                 <DropdownMenu.Item className={DropDownMenuItemStyle}>Profile</DropdownMenu.Item>
               </Link>
 

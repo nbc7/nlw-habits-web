@@ -1,9 +1,11 @@
 import * as Checkbox from '@radix-ui/react-checkbox';
 import dayjs from 'dayjs';
 import { Check } from 'phosphor-react';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+
 import { api } from '../lib/axios';
 import { useAuth } from '../hooks/useAuth';
+import { ProfileContext } from '../contexts/ProfileContext';
 
 interface HabitsListProps {
   date: Date;
@@ -21,14 +23,15 @@ interface HabitsInfo {
 
 export function HabitsList({ date, onCompletedChanged }: HabitsListProps) {
   const [habitsInfo, setHabitsInfo] = useState<HabitsInfo>();
-  const { user } = useAuth();
+  const user = useContext(ProfileContext);
+  const { user: authUser } = useAuth();
 
   useEffect(() => {
     api
       .post(
         '/day',
         {
-          userEmail: user?.email,
+          userEmail: user.email,
         },
         {
           params: {
@@ -72,7 +75,7 @@ export function HabitsList({ date, onCompletedChanged }: HabitsListProps) {
             key={habit.id}
             onCheckedChange={() => handleToggleHabit(habit.id)}
             checked={habitsInfo.completedHabits.includes(habit.id)}
-            disabled={isDateInPast}
+            disabled={isDateInPast || user.email != authUser?.email}
             className="flex items-center gap-3 group focus:outline-none disabled:cursor-not-allowed"
           >
             <div className="h-8 w-8 rounded-lg flex items-center justify-center bg-zinc-900 border-2 border-zinc-800 group-data-[state=checked]:bg-green-500 group-data-[state=checked]:border-green-500 transition-colors group-focus:ring-2 group-focus:ring-violet-600 group-focus:ring-offset-2 group-focus:ring-offset-background">
