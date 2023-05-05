@@ -14,7 +14,7 @@ export function NewHabitForm() {
   async function createNewHabit(event: FormEvent) {
     event.preventDefault();
 
-    if (!title || weekDays.length == 0) return;
+    if (!title.trim() || weekDays.length == 0) return alert('Informe o nome do hábito e escolha a periodicidade.');
 
     await api.post('habits', {
       title,
