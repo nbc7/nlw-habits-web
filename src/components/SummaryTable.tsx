@@ -8,10 +8,12 @@ import { ProfileContext } from '../contexts/ProfileContext';
 
 const weekDays = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
 
-const summaryDates = generateDatesFromYearBeginning();
+const dates = generateDatesFromYearBeginning();
 
-const minimumSummaryDatesSize = 18 * 7; //18 weeks
-const amountOfDaysToFill = minimumSummaryDatesSize - summaryDates.length;
+const summaryDatesSize = 18 * 7; //18 weeks
+const weeksToRemove = Math.floor((dates.length - summaryDatesSize) / 7 - 0.1) + 1;
+const summaryDates = dates.length > summaryDatesSize ? dates.slice(7 * weeksToRemove, dates.length) : dates;
+const amountOfDaysToFill = summaryDatesSize - summaryDates.length;
 
 type Summary = {
   id: string;
