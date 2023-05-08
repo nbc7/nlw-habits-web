@@ -36,7 +36,7 @@ export function Profile() {
         <Header />
 
         <div className="flex items-center justify-center gap-6">
-          <img src={user.avatarUrl} alt="foto de perfil" className="h-16 w-16 rounded-full" />
+          <img src={user.avatarUrl} alt="foto de perfil" referrerPolicy="no-referrer" className="h-16 w-16 rounded-full" />
 
           <p className="font-semibold text-xl">{`${user.name.substring(0, 60)}${user.name.length > 60 ? '...' : ''}`}</p>
         </div>
