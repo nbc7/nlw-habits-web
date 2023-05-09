@@ -42,7 +42,12 @@ export function AuthContexProvider({ children }: AuthProviderProps) {
 
       if (access) {
         window.history.replaceState({}, '', window.location.href.split('?')[0]);
-        cookies.set('habits.google.credentials', access, { maxAge: 60 * 60 * 1, secure: true, sameSite: 'strict' });
+        cookies.set('habits.google.credentials', access, { maxAge: 60 * 15, secure: true, sameSite: 'strict' });
+        credentials = cookies.get('habits.google.credentials');
+      }
+
+      if (!credentials && cookies.get('habits.google.refresh')) {
+        await api.get('/login/refresh', { withCredentials: true });
         credentials = cookies.get('habits.google.credentials');
       }
 
@@ -65,6 +70,7 @@ export function AuthContexProvider({ children }: AuthProviderProps) {
 
   function signOut() {
     cookies.remove('habits.google.credentials');
+    cookies.remove('habits.google.refresh');
     setUser(null);
   }
 
