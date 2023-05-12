@@ -52,7 +52,9 @@ Install dependencies
 npm install
 ```
 
-Start the server
+Rename the `.env.example` file to `.env` and make changes if you need
+
+Start the app
 
 ```bash
 npm run dev
