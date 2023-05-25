@@ -15,7 +15,7 @@ export function Home() {
             <h1 className="font-semibold text-5xl leading-[60px] text-center">Desenvolva novos hábitos e tenha uma rotina melhor.</h1>
 
             <a
-              href={user ? `/${encodeURI(user.email.split('@')[0])}` : `${import.meta.env.VITE_SERVER_BASE_URL}/login`}
+              href={user ? `/${encodeURI(user.username)}` : `${import.meta.env.VITE_SERVER_BASE_URL}/login`}
               className="border font-semibold rounded-lg px-6 py-4 flex items-center gap-3 transition-colors border-violet-500 bg-violet-500 hover:border-violet-300 hover:bg-violet-300 focus:ring-violet-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-background"
             >
               Comece hoje!
