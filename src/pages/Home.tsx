@@ -1,6 +1,3 @@
-import '../styles/global.css';
-import '../lib/dayjs';
-
 import { Header } from '../components/Header';
 import heroImage from '../assets/hero support img.svg';
 import { useAuth } from '../hooks/useAuth';
