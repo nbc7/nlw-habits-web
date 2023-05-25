@@ -16,7 +16,7 @@ export function NewHabitForm() {
 
     if (!title.trim() || weekDays.length == 0) return alert('Informe o nome do hábito e escolha a periodicidade.');
 
-    await api.post('habits', {
+    await api.post('habits/new', {
       title,
       weekDays,
       email: user?.email,
