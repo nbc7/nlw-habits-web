@@ -25,7 +25,7 @@ export function Header() {
         )}
         onClick={isDisabled ? (e) => e.preventDefault() : () => {}}
       >
-        Login
+        Entrar
       </a>
     );
   }
@@ -63,16 +63,16 @@ export function Header() {
           {triggerWidth && (
             <DropdownMenu.Content className="bg-background border border-violet-500 rounded-lg" style={{ width: triggerWidth }}>
               <Link to={`/${encodeURI(user!.email.split('@')[0])}`}>
-                <DropdownMenu.Item className={DropDownMenuItemStyle}>Profile</DropdownMenu.Item>
+                <DropdownMenu.Item className={DropDownMenuItemStyle}>Perfil</DropdownMenu.Item>
               </Link>
 
-              <Link to="/settings">
-                <DropdownMenu.Item className={DropDownMenuItemStyle}>Settings</DropdownMenu.Item>
+              <Link to="/habits">
+                <DropdownMenu.Item className={DropDownMenuItemStyle}>Meus hábitos</DropdownMenu.Item>
               </Link>
 
               <Link to="/">
                 <DropdownMenu.Item className={DropDownMenuItemStyle} onClick={signOut}>
-                  Logout
+                  Sair
                 </DropdownMenu.Item>
               </Link>
 

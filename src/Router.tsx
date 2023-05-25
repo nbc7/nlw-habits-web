@@ -2,7 +2,7 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 
 import { useAuth } from './hooks/useAuth';
 
-import { App } from './pages/App';
+import { MyHabits } from './pages/MyHabits';
 import { Home } from './pages/Home';
 import { Profile } from './pages/Profile';
 import { Error404 } from './pages/Error404';
@@ -22,10 +22,10 @@ export function Router() {
       <Route path="/" element={<Home />} />
       <Route path="/:username" element={<Profile />} />
       <Route
-        path="/settings"
+        path="/habits"
         element={
           <RequireAuth>
-            <App />
+            <MyHabits />
           </RequireAuth>
         }
       />
