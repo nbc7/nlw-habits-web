@@ -5,6 +5,7 @@ import { api } from '../lib/axios';
 
 export interface UserProps {
   name: string;
+  username: string;
   email: string;
   avatarUrl: string;
 }
